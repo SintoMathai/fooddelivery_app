@@ -20,7 +20,7 @@ class _page1State extends State<Intropage> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Food is Love!\nand we are serving it up\ncome taste with passion!!",style: TextStyle(color: Colors.white,fontSize: 30,fontStyle: FontStyle.italic),),
+              Text("Food is Love!\nand we are serving it up\ncome taste with passion!!",style: TextStyle(color: Colors.black,fontSize: 30,fontStyle: FontStyle.italic),),
               SizedBox(height: 5,),
               InkWell(
                 onTap: () {

@@ -109,7 +109,7 @@ class _CartState extends State<Cart> {
                         {
                           final imageurl=snapshot.data!.image;
                           final name=snapshot.data!.name;
-                          // if(imageurl!=null&&name!=null)
+                          // if(imageurl!=null&&name!=null)git
                           //   {
                               Map<String,dynamic> data={
                                 "name":snapshot.data?.name,
