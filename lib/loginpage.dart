@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fooddelivery_app/bottomnavigationbar.dart';
 import 'package:fooddelivery_app/functions.dart';
 import 'package:fooddelivery_app/mainscreen.dart';
 import 'package:fooddelivery_app/signup.dart';
@@ -24,7 +25,7 @@ class _page2State extends State<Login> {
             email: username.text,
             password: password.text
         );
-        Navigator.push(context, MaterialPageRoute(builder:  (context) => page4(),));
+        Navigator.push(context, MaterialPageRoute(builder:  (context) => bottombar(),));
       }
       catch(e){
         print("error:$e");
@@ -56,13 +57,14 @@ class _page2State extends State<Login> {
                     backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),),
                   onPressed: () {
+                    login();
 
               }, child: Text("LOGIN",style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),)),
             ),
             SizedBox(height: 50,),
             InkWell(
               onTap: () {
-                // Navigator.push(context, MaterialPageRoute(builder:  (context) => page4(),),);
+                 Navigator.push(context, MaterialPageRoute(builder:  (context) => Signup(),),);
 
               },
                 child: Text("don't have an acoount?Sign up",style: TextStyle(color: Colors.white, fontSize: 15,),))

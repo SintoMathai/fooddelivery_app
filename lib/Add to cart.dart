@@ -5,8 +5,14 @@ import 'package:fooddelivery_app/Cart.dart';
 import 'package:fooddelivery_app/api.dart';
 import 'dart:async';
 
-import 'package:fooddelivery_app/data_model%20(1).dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fooddelivery_app/data_model.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
   int id;
@@ -17,13 +23,16 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  bool _isInit = true;
   Networking net=Networking();
   int totalSeconds = 3600;
-  // DataModel model=DataModel();
-
   Timer? timer;
+  String addresses = "40179 Roy Pines,\n Kansas City,\nPennsylvania - 18484, Lesotho";
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<Addressprovider>(context, listen: false).setaddress(addresses);
+    });
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (totalSeconds > 0) {
         setState(() {
@@ -34,7 +43,6 @@ class _CartState extends State<Cart> {
       }
     });
   }
-
   String get formattedTime {
     int hours = totalSeconds ~/ 3600;
     int minutes = (totalSeconds % 3600) ~/ 60;
@@ -44,12 +52,7 @@ class _CartState extends State<Cart> {
         "${minutes.toString().padLeft(2, '0')}:"
         "${seconds.toString().padLeft(2, '0')}";
   }
-
   @override
-  void dispose() {
-    timer?.cancel(); // clean up timer
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +85,7 @@ class _CartState extends State<Cart> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("40179 Roy Pines, Kansas City,\nPennsylvania - 18484, Lesotho"),
+                    Text("$addresses"),
                     ElevatedButton(
                         onPressed: () {
                     }, child: Text("change",style: TextStyle(color: Colors.blueGrey),)),
@@ -107,26 +110,19 @@ class _CartState extends State<Cart> {
                     child: Center(child: InkWell(
                         onTap: () async
                         {
-                          final imageurl=snapshot.data!.image;
-                          final name=snapshot.data!.name;
-                          // if(imageurl!=null&&name!=null)git
-                          //   {
-                              Map<String,dynamic> data={
-                                "name":snapshot.data?.name,
-                                "image":snapshot.data?.image,
-
-
-                              };
-                              DataModel.instance.insert(data);
-                              // SharedPreferences prefer=await SharedPreferences.getInstance();
-                              // Map<String,dynamic> cartitem={
-                              //   'image':imageurl,
-                              //   'name':name
-                             // };
-                              // prefer.setString('cartitem', jsonEncode(cartitem));
-                            // }
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => Cart2(imageUrl: imageurl,name:name),));
-                        },
+                          if(snapshot.hasData&&snapshot.data!=null) {
+                            final imageurl = snapshot.data!.image;
+                            final name = snapshot.data!.name;
+                            Map<String, dynamic> data = {
+                              "name": name,
+                              "image": imageurl
+                            };
+                            DataModel.instance.insert({
+                              'data':jsonEncode(data)
+                            });
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Cart2(),));
+                          }
+                           },
                         child: Text("ADD TO CART",style:TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold)))))
               ],
             );

@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fooddelivery_app/Add%20to%20cart.dart';
 import 'package:fooddelivery_app/api.dart';
+import 'package:fooddelivery_app/data_model.dart';
 import 'package:fooddelivery_app/intropage.dart';
 import 'package:fooddelivery_app/modelclass.dart';
+import 'package:fooddelivery_app/provider.dart';
 import 'package:fooddelivery_app/signup.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class page4 extends StatefulWidget {
    page4({super.key});
 
@@ -13,13 +18,35 @@ class page4 extends StatefulWidget {
   State<page4> createState() => _page3State();
 }
 class _page3State extends State<page4> {
+
+  // void logout() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
+  //   Navigator.pushReplacementNamed(context, '/login');
+  // }
+
   Networking net = Networking();
-  var favour =[];
-  var currentindex=0;
+  bool isFavorite = false;
+
   final TextEditingController searchController = TextEditingController();
   List<String> image=["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQeOegaKvREOZ7jWssbdXXPjOt0HC6q0YXQ&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxtTPBwxo-2EzMAgtiWAsZ-d9K4Un9FxRNw&s",
     "https://content.jdmagicbox.com/comp/kozhikode/g5/0495px495.x495.220317013138.k8g5/catalogue/broast-club-nadapuram-kozhikode-fast-food-k48t6wqtz7.jpg"];
+  List<Recipe>filtereditems=[];
+  List<Recipe>allitems=[];
+  void initState() {
+    super.initState();
+    fetchitems();
+  }
+
+  Future<void> fetchitems() async {
+    var items = await net.multiuser();
+    setState(() {
+      allitems = items;
+      filtereditems = items;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +58,15 @@ class _page3State extends State<page4> {
             Container(
               width: 250,
               child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    filtereditems = allitems
+                        .where((item) =>
+                        item.name.toLowerCase().contains(value.toLowerCase()))
+                        .toList();
+                  });
+
+                },
                 controller: searchController,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
@@ -56,18 +92,22 @@ class _page3State extends State<page4> {
       ),
       drawer: Drawer(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.grey[400],
+        backgroundColor: Colors.grey[500],
         child: ListView(
           children: [
-            ListTile(title: Text("Profile",),leading: Icon(CupertinoIcons.profile_circled),),
+            ListTile(title: Text("Profile",style: TextStyle(color: Colors.white),),leading: Icon(CupertinoIcons.profile_circled,color: Colors.white,),),
             Divider(),
-            ListTile(title: Text("settings"),leading: Icon(Icons.settings),),
+            ListTile(title: Text("settings",style: TextStyle(color: Colors.white),),leading: Icon(Icons.settings,color: Colors.white,),),
             Divider(),
-            ListTile(title: Text("Refer and earn"),leading: Icon(CupertinoIcons.group_solid),),
+            ListTile(title: Text("Refer and earn",style: TextStyle(color: Colors.white),),leading: Icon(CupertinoIcons.group_solid,color: Colors.white,),),
             Divider(),
-            ListTile(title: Text("Payment details"),leading: Icon(Icons.payment),),
+            ListTile(title: Text("Payment details",style: TextStyle(color: Colors.white),),leading: Icon(Icons.payment,color: Colors.white,),),
             Divider(),
-            ListTile(title: Text("Logout"),leading: Icon(Icons.logout),)
+            InkWell(
+                onTap: () {
+                  // logout();
+                },
+                child: ListTile(title: Text("Logout",style: TextStyle(color: Colors.white),),leading: Icon(Icons.logout,color: Colors.white,),))
           ],
       ),),
       backgroundColor: Colors.white,
@@ -97,82 +137,58 @@ class _page3State extends State<page4> {
           ),
           Expanded(
             child: SizedBox(height: 500,
-              child:FutureBuilder(future: net.multiuser(), builder: (context, snapshot) {
-                return GridView.builder(
-                  itemCount: snapshot.data?.length,
-                  padding: EdgeInsets.all(5),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                childAspectRatio: 1/1.6,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,),
+              child:GridView.builder(
+                itemCount: filtereditems.length,
+                padding: EdgeInsets.all(5),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+              childAspectRatio: 1/1.6,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,),
 
-                  itemBuilder: (context, index) {
-                    final item=snapshot.data![index];
-                    final vb=snapshot.data![index].ingredients;
-                    return Container(
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.grey[300]),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(id:item.id,),));},
-                                      child: Image.network("${snapshot.data?[index].image}", fit: BoxFit.cover)),),
-                                SizedBox(height: 5,),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("${snapshot.data?[index].rating} ratings",style: TextStyle(fontWeight: FontWeight.bold),),
-                                              IconButton(
-
-                                                  onPressed: () {
-                                                setState(() {
-                                                  favour.add(index);
-                                                });
-                                              }, icon:Icon(Icons.favorite,color: favour.contains(index)?Colors.red:Colors.white)
+                itemBuilder: (context, index) {
+                  final item=filtereditems[index];
+                  return Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: Colors.grey[300]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => Cart(id:item.id,),));},
+                                    child: Image.network("${item.image}", fit: BoxFit.cover)),),
+                              SizedBox(height: 5,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("${item.rating} ratings",style: TextStyle(fontWeight: FontWeight.bold),),
+                                            IconButton(
+                                              icon: Icon(
+                                                isFavorite ? Icons.favorite : Icons.favorite_border,
+                                                color: isFavorite ? Colors.red : Colors.white,
+                                                size: 25,
                                               ),
-                                            ],
-                                          ),
-                                          Text("${snapshot.data?[index].name}",
-                                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
-                                          ),
-                      ]
-                    )
-                    );
-                    },
-                );
-
-              })
+                                              onPressed: () {
+                                                setState(() {
+                                                  isFavorite = !isFavorite;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Text("${item.name}",
+                                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                    ]
+                  )
+                  );
+                  },
+              )
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(5),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.blue),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: BottomNavigationBar(
-              unselectedItemColor: Colors.black,
-              selectedItemColor: Colors.grey,
-              currentIndex: currentindex,
-              onTap: (value) {
-                setState(() {
-                  currentindex=value;
-                });
-              },
-              items:
-          [
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: 'home',),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'favourites'),
-            BottomNavigationBarItem(icon: Icon(Icons.qr_code),label: 'scan'),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart),label: 'cart'),
-          ]),
-        ),
       ),
     );
   }
