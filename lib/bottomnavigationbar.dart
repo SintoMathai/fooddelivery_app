@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_app/Add%20to%20cart.dart';
 import 'package:fooddelivery_app/Cart.dart';
-import 'package:fooddelivery_app/favourites.dart';
 import 'package:fooddelivery_app/mainscreen.dart';
 import 'package:fooddelivery_app/modelclass.dart';
 import 'package:fooddelivery_app/quick scan.dart';

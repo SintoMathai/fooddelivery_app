@@ -33,8 +33,8 @@ class DataModel{
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
-            $columndata TEXT NOT NULL
+            // $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            // $columndata TEXT NOT NULL
             
           )
           ''');
@@ -42,6 +42,7 @@ class DataModel{
   Future<int> insert(Map<String, dynamic> row) async {
     Database db = await database;
     return await db.insert(table, row);
+
   }
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await database;
@@ -52,29 +53,4 @@ class DataModel{
     Database db=await database;
     return await db.delete(table,where: 'id =?',whereArgs: [id]);
   }
-
-
-
-
-
-  Future<int> insertFavorite(Map<String, dynamic> row) async {
-    Database db = await database;
-    return await db.insert('favorites_table', row, conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  Future<List<Map<String, dynamic>>> getAllFavorites() async {
-    Database db = await database;
-    return await db.query('favorites_table');
-  }
-
-  Future<bool> isFavorite(int id) async {
-    Database db = await database;
-    var result = await db.query('favorites_table', where: 'id = ?', whereArgs: [id]);
-    return result.isNotEmpty;
-  }
-  Future<int> deleteFavorite(int id) async {
-    Database db = await database;
-    return await db.delete('favorites_table', where: 'id = ?', whereArgs: [id]);
-  }
-
 }

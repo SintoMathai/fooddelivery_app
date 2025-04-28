@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_app/Payment.dart';
 import 'package:fooddelivery_app/api.dart';
-import 'package:fooddelivery_app/data_model.dart'; // Make sure this path is correct
+import 'package:fooddelivery_app/data_model.dart';
 
 class Cart2 extends StatefulWidget {
   const Cart2({super.key});
@@ -17,23 +17,22 @@ class _Cart2State extends State<Cart2> {
   String? name;
   List<Map<String, dynamic>> cartItems = [];
 
-
   @override
   void initState() {
     super.initState();
     fetchCartData();
   }
-
   void fetchCartData() async {
     List<Map<String, dynamic>> rows = await DataModel.instance.queryAllRows();
     List<Map<String, dynamic>> tempList = [];
     for (var row in rows) {
+      print("Fetched DB row: $row");
       Map<String, dynamic> decoded = jsonDecode(row['data']);
-      decoded['id'] = row['id'];
+      decoded['id'] = row['_id'];
+      print("Decoded ID: ${row['id']} from DB row: $row");
+
       tempList.add(decoded);
-
     }
-
     setState(() {
       cartItems = tempList;
     });
@@ -41,10 +40,7 @@ class _Cart2State extends State<Cart2> {
     void removeFromCart(int id) async {
       await DataModel.instance.delete(id);
       fetchCartData();
-
-
   }
-
   void removeitem(int index)
   {
     setState(() {
@@ -53,7 +49,6 @@ class _Cart2State extends State<Cart2> {
   }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 15, top: 40),
@@ -160,11 +155,11 @@ class _Cart2State extends State<Cart2> {
                                 ),
                               ),
                               onPressed: () {
-                               removeitem(index);
+                                print("Trying to delete item with ID: ${cartitem['id']}");
+                                removeFromCart(cartitem['_id']);
                                  },
                                 child:
                                 Text("Remove from cart")
-
                             ),
                           ],
                         )
@@ -172,11 +167,7 @@ class _Cart2State extends State<Cart2> {
                     ),
                   ),
                 );
-
-            },)
-
-
-      )
+            },))
     );
   }
 }

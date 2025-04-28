@@ -27,8 +27,11 @@ class _page2State extends State<Login> {
         );
         Navigator.push(context, MaterialPageRoute(builder:  (context) => bottombar(),));
       }
+
       catch(e){
-        print("error:$e");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("invalid username or password")));
+
+
       }}
     return Scaffold(
       body: Container(

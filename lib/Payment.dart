@@ -101,28 +101,30 @@ class _PaymentState extends State<Payment> {
                     borderRadius: BorderRadius.circular(40),
                     child: Image(image: NetworkImage("https://images.goodreturns.in/img/2019/01/creditcard-23-1461389394-1547703670.jpg"))),),
                 if(showcontainer)
-                  Container(
-                    decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(20)),
-                    height: 60,
-                    width: 300,
-                    margin: EdgeInsets.all(10),
-                    child: Center(child: InkWell(
-                      onTap: () {
-                        showDialog(context: context, builder: (context) {
-                          return AlertDialog(
-                            title: Text(("payment success")),
-                            content: Text("payment completed"),
-                            actions: [
-                              TextButton(onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => bottombar(),));
+                  InkWell(
+                    onTap: () {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: Text(("payment success")),
+                          content: Text("payment completed"),
+                          actions: [
+                            TextButton(onPressed: () async {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => bottombar(),));
 
-                              }, child: Text("ok"))
-                            ],
-                          );
-                        },);
-                      },
+                            }, child: Text("ok"))
+                          ],
+                        );
+                      },);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(20)),
+                      height: 60,
+                      width: 300,
+                      margin: EdgeInsets.all(10),
+                      child: Center(child: InkWell(
 
-                        child: Text("pay now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),))),
+                          child: Text("pay now",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),))),
+                    ),
                   )
               ],
             ),

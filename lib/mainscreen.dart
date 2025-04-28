@@ -26,7 +26,7 @@ class _page3State extends State<page4> {
   // }
 
   Networking net = Networking();
-  bool isFavorite = false;
+  Set<int> favoriteItems = {};
 
   final TextEditingController searchController = TextEditingController();
   List<String> image=["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQeOegaKvREOZ7jWssbdXXPjOt0HC6q0YXQ&s",
@@ -62,10 +62,8 @@ class _page3State extends State<page4> {
                   setState(() {
                     filtereditems = allitems
                         .where((item) =>
-                        item.name.toLowerCase().contains(value.toLowerCase()))
-                        .toList();
+                        item.name.toLowerCase().contains(value.toLowerCase())).toList();
                   });
-
                 },
                 controller: searchController,
                 decoration: InputDecoration(
@@ -117,7 +115,7 @@ class _page3State extends State<page4> {
           SizedBox(
             height: 200,
             child: CarouselSlider.builder(
-              options: CarouselOptions(autoPlay: true, autoPlayInterval: Duration(seconds: 5)),
+              options: CarouselOptions(autoPlay: true, autoPlayInterval: Duration(seconds: 2)),
               itemCount: image.length,
               itemBuilder: (BuildContext context, int index, int realIndex) {
                 return Container(
@@ -167,15 +165,19 @@ class _page3State extends State<page4> {
                                             Text("${item.rating} ratings",style: TextStyle(fontWeight: FontWeight.bold),),
                                             IconButton(
                                               icon: Icon(
-                                                isFavorite ? Icons.favorite : Icons.favorite_border,
-                                                color: isFavorite ? Colors.red : Colors.white,
+                                                favoriteItems.contains(item.id) ? Icons.favorite : Icons.favorite_border,
+                                                color: favoriteItems.contains(item.id) ? Colors.red : Colors.white,
                                                 size: 25,
                                               ),
                                               onPressed: () {
-                                                setState(() {
-                                                  isFavorite = !isFavorite;
-                                                });
-                                              },
+                                                  setState(() {
+                                                  if (favoriteItems.contains(item.id)) {
+                                                   favoriteItems.remove(item.id);
+                                                   } else {
+                                                  favoriteItems.add(item.id);
+                                                   }
+                                              });
+                                          },
                                             ),
                                           ],
                                         ),
