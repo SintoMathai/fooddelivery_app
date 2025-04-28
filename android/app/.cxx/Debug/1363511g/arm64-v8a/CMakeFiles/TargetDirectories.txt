@@ -1,0 +1,2 @@
+C:/Users/Sinto/AndroidStudioProjects/Fooddelivery_app/android/app/.cxx/Debug/1363511g/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/Sinto/AndroidStudioProjects/Fooddelivery_app/android/app/.cxx/Debug/1363511g/arm64-v8a/CMakeFiles/rebuild_cache.dir
