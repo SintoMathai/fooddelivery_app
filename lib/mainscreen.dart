@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fooddelivery_app/Add%20to%20cart.dart';
 import 'package:fooddelivery_app/api.dart';
-import 'package:fooddelivery_app/modelclass.dart';
 import 'package:fooddelivery_app/provider.dart';
 import 'package:provider/provider.dart';
 
