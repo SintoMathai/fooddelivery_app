@@ -22,8 +22,6 @@ class _page3State extends State<page4> {
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuxtTPBwxo-2EzMAgtiWAsZ-d9K4Un9FxRNw&s",
     "https://content.jdmagicbox.com/comp/kozhikode/g5/0495px495.x495.220317013138.k8g5/catalogue/broast-club-nadapuram-kozhikode-fast-food-k48t6wqtz7.jpg"
   ];
-  List<Recipe> filtereditems = [];
-  List<Recipe> allitems = [];
   void initState() {
     super.initState();
     fetchitems();
@@ -31,14 +29,14 @@ class _page3State extends State<page4> {
 
   Future<void> fetchitems() async {
     var items = await net.multiuser();
-    setState(() {
-      allitems = items;
-      filtereditems = items;
-    });
+    Provider.of<filter>(context,listen: false).setitem(items);
+
   }
 
   Widget build(BuildContext context) {
     final favProvider = Provider.of<favour>(context);
+    final receipeprovider=Provider.of<filter>(context);
+    final filtereditems=receipeprovider.filtereditems;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,13 +49,7 @@ class _page3State extends State<page4> {
               width: 250,
               child: TextField(
                 onChanged: (value) {
-                  setState(() {
-                    filtereditems = allitems
-                        .where((item) => item.name
-                            .toLowerCase()
-                            .contains(value.toLowerCase()))
-                        .toList();
-                  });
+                 receipeprovider.filteritems(value);
                 },
                 controller: searchController,
                 decoration: InputDecoration(
@@ -66,6 +58,7 @@ class _page3State extends State<page4> {
                   prefixIcon: InkWell(
                     onTap: () {
                       searchController.clear();
+                      receipeprovider.filteritems('');
                     },
                     child: Icon(Icons.search, color: Colors.black, size: 20),
                   ),

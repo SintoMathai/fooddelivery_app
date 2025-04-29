@@ -170,7 +170,7 @@ class _Cart2State extends State<Cart2> {
                                       onPressed: () {
                                         print(
                                             "Trying to delete item with ID: ${cartitem['id']}");
-                                        removeFromCart(cartitem['_id']);
+                                        removeFromCart(cartitem['id']);
                                       },
                                       child: Text("Remove from cart")),
                                 ],
