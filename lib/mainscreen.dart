@@ -53,6 +53,7 @@ class _page3State extends State<page4> {
                 },
                 controller: searchController,
                 decoration: InputDecoration(
+
                   fillColor: Colors.white,
                   filled: true,
                   prefixIcon: InkWell(
@@ -172,6 +173,7 @@ class _page3State extends State<page4> {
             child: SizedBox(
                 height: 500,
                 child: GridView.builder(
+                  shrinkWrap: true,
                   itemCount: filtereditems.length,
                   padding: EdgeInsets.all(5),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
