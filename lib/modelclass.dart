@@ -2,8 +2,10 @@
 //
 //     final receipes = receipesFromJson(jsonString);
 import 'dart:convert';
+
 Receipes receipesFromJson(String str) => Receipes.fromJson(json.decode(str));
 String receipesToJson(Receipes data) => json.encode(data.toJson());
+
 class Receipes {
   List<Recipe> recipes;
   int total;
@@ -16,18 +18,20 @@ class Receipes {
     required this.limit,
   });
   factory Receipes.fromJson(Map<String, dynamic> json) => Receipes(
-    recipes: List<Recipe>.from(json["recipes"].map((x) => Recipe.fromJson(x))),
-    total: json["total"],
-    skip: json["skip"],
-    limit: json["limit"],
-  );
+        recipes:
+            List<Recipe>.from(json["recipes"].map((x) => Recipe.fromJson(x))),
+        total: json["total"],
+        skip: json["skip"],
+        limit: json["limit"],
+      );
   Map<String, dynamic> toJson() => {
-    "recipes": List<dynamic>.from(recipes.map((x) => x.toJson())),
-    "total": total,
-    "skip": skip,
-    "limit": limit,
-  };
+        "recipes": List<dynamic>.from(recipes.map((x) => x.toJson())),
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+      };
 }
+
 class Recipe {
   int id;
   String name;
@@ -64,50 +68,48 @@ class Recipe {
     required this.mealType,
   });
   factory Recipe.fromJson(Map<String, dynamic> json) => Recipe(
-    id: json["id"],
-    name: json["name"],
-    ingredients: List<String>.from(json["ingredients"].map((x) => x)),
-    instructions: List<String>.from(json["instructions"].map((x) => x)),
-    prepTimeMinutes: json["prepTimeMinutes"],
-    cookTimeMinutes: json["cookTimeMinutes"],
-    servings: json["servings"],
-    difficulty: difficultyValues.map[json["difficulty"]]!,
-    cuisine: json["cuisine"],
-    caloriesPerServing: json["caloriesPerServing"],
-    tags: List<String>.from(json["tags"].map((x) => x)),
-    userId: json["userId"],
-    image: json["image"],
-    rating: json["rating"]?.toDouble(),
-    reviewCount: json["reviewCount"],
-    mealType: List<String>.from(json["mealType"].map((x) => x)),
-  );
+        id: json["id"],
+        name: json["name"],
+        ingredients: List<String>.from(json["ingredients"].map((x) => x)),
+        instructions: List<String>.from(json["instructions"].map((x) => x)),
+        prepTimeMinutes: json["prepTimeMinutes"],
+        cookTimeMinutes: json["cookTimeMinutes"],
+        servings: json["servings"],
+        difficulty: difficultyValues.map[json["difficulty"]]!,
+        cuisine: json["cuisine"],
+        caloriesPerServing: json["caloriesPerServing"],
+        tags: List<String>.from(json["tags"].map((x) => x)),
+        userId: json["userId"],
+        image: json["image"],
+        rating: json["rating"]?.toDouble(),
+        reviewCount: json["reviewCount"],
+        mealType: List<String>.from(json["mealType"].map((x) => x)),
+      );
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "ingredients": List<dynamic>.from(ingredients.map((x) => x)),
-    "instructions": List<dynamic>.from(instructions.map((x) => x)),
-    "prepTimeMinutes": prepTimeMinutes,
-    "cookTimeMinutes": cookTimeMinutes,
-    "servings": servings,
-    "difficulty": difficultyValues.reverse[difficulty],
-    "cuisine": cuisine,
-    "caloriesPerServing": caloriesPerServing,
-    "tags": List<dynamic>.from(tags.map((x) => x)),
-    "userId": userId,
-    "image": image,
-    "rating": rating,
-    "reviewCount": reviewCount,
-    "mealType": List<dynamic>.from(mealType.map((x) => x)),
-  };
+        "id": id,
+        "name": name,
+        "ingredients": List<dynamic>.from(ingredients.map((x) => x)),
+        "instructions": List<dynamic>.from(instructions.map((x) => x)),
+        "prepTimeMinutes": prepTimeMinutes,
+        "cookTimeMinutes": cookTimeMinutes,
+        "servings": servings,
+        "difficulty": difficultyValues.reverse[difficulty],
+        "cuisine": cuisine,
+        "caloriesPerServing": caloriesPerServing,
+        "tags": List<dynamic>.from(tags.map((x) => x)),
+        "userId": userId,
+        "image": image,
+        "rating": rating,
+        "reviewCount": reviewCount,
+        "mealType": List<dynamic>.from(mealType.map((x) => x)),
+      };
 }
-enum Difficulty {
-  EASY,
-  MEDIUM
-}
-final difficultyValues = EnumValues({
-  "Easy": Difficulty.EASY,
-  "Medium": Difficulty.MEDIUM
-});
+
+enum Difficulty { EASY, MEDIUM }
+
+final difficultyValues =
+    EnumValues({"Easy": Difficulty.EASY, "Medium": Difficulty.MEDIUM});
+
 class EnumValues<T> {
   Map<String, T> map;
   late Map<T, String> reverseMap;

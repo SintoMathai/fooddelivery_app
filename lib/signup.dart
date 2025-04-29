@@ -17,11 +17,12 @@ class _Page4State extends State<Signup> {
   Future<User?> signUp() async {
     if (username.text.isNotEmpty &&
         email.text.isNotEmpty &&
-        password.text.isNotEmpty&&
+        password.text.isNotEmpty &&
         confirmpassword.text.isNotEmpty) {
-      if (password.text== confirmpassword.text) {
+      if (password.text == confirmpassword.text) {
         try {
-          final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          final credential =
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: email.text,
             password: password.text,
           );
@@ -39,13 +40,15 @@ class _Page4State extends State<Signup> {
       return null;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage("https://thumbs.dreamstime.com/b/tall-burger-many-toppings-including-lettuce-tomatoes-onions-cheese-piled-high-ingredients-creating-visually-351746512.jpg"),
+            image: NetworkImage(
+                "https://thumbs.dreamstime.com/b/tall-burger-many-toppings-including-lettuce-tomatoes-onions-cheese-piled-high-ingredients-creating-visually-351746512.jpg"),
             fit: BoxFit.fill,
           ),
         ),
@@ -97,7 +100,6 @@ class _Page4State extends State<Signup> {
                 ),
                 onPressed: () {
                   signUp();
-
                 },
                 child: Text(
                   "SIGNUP",

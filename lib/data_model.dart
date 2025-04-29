@@ -1,17 +1,14 @@
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DataModel{
+class DataModel {
   static final _databaseName = "my_database.db";
   static final _databaseVersion = 1;
   static final table = 'my_table';
   static final columnId = '_id';
   static final columndata = 'data';
 
-
   static Database? _database;
-
 
   DataModel._privateConstructor();
 
@@ -27,7 +24,8 @@ class DataModel{
   Future<Database> _initDatabase() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, _databaseName);
-    return await openDatabase(path, version: _databaseVersion, onCreate: _onCreate);
+    return await openDatabase(path,
+        version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -39,18 +37,19 @@ class DataModel{
           )
           ''');
   }
+
   Future<int> insert(Map<String, dynamic> row) async {
     Database db = await database;
     return await db.insert(table, row);
-
   }
+
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await database;
     return await db.query(table);
   }
-  Future<int> delete(int id) async
-  {
-    Database db=await database;
-    return await db.delete(table,where: 'id =?',whereArgs: [id]);
+
+  Future<int> delete(int id) async {
+    Database db = await database;
+    return await db.delete(table, where: 'id =?', whereArgs: [id]);
   }
 }

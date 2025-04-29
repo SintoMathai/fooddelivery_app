@@ -15,12 +15,9 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_)=>Addressprovider())
-      ],
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home:bottombar()),
+      providers: [ChangeNotifierProvider(create: (_) => Addressprovider()),
+      ChangeNotifierProvider(create: (context) => favour(),)],
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: bottombar()),
     ),
   );
 }

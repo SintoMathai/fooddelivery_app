@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-Widget customTextField({required String hintText, IconData? prefixIcon,
-required TextEditingController  controller,
-bool obscuretext=false,}) {
+Widget customTextField({
+  required String hintText,
+  IconData? prefixIcon,
+  required TextEditingController controller,
+  bool obscuretext = false,
+}) {
   return TextField(
     controller: controller,
     obscureText: obscuretext,
@@ -15,7 +18,9 @@ bool obscuretext=false,}) {
       fillColor: Colors.grey[100],
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(color: Colors.grey,),
+        borderSide: BorderSide(
+          color: Colors.grey,
+        ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
