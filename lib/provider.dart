@@ -1,10 +1,6 @@
 import 'dart:core';
-import 'dart:core';
-
 import 'package:flutter/cupertino.dart';
-import 'package:fooddelivery_app/api.dart';
 import 'package:fooddelivery_app/modelclass.dart';
-import 'package:provider/provider.dart';
 
 class Addressprovider extends ChangeNotifier {
   String _address =
