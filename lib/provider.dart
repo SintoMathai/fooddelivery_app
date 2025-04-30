@@ -57,5 +57,6 @@ class filter extends ChangeNotifier {
           )
           .toList();
     }
+    notifyListeners();
   }
 }

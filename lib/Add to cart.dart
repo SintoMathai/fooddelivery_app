@@ -1,28 +1,22 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_app/Cart.dart';
 import 'package:fooddelivery_app/api.dart';
 import 'dart:async';
-
 import 'package:fooddelivery_app/data_model.dart';
 import 'package:fooddelivery_app/provider.dart';
-import 'package:fooddelivery_app/provider.dart';
-import 'package:fooddelivery_app/provider.dart';
-import 'package:fooddelivery_app/provider.dart';
-import 'package:fooddelivery_app/provider.dart';
-import 'package:fooddelivery_app/provider.dart';
+
 import 'package:provider/provider.dart';
 
-class Cart extends StatefulWidget {
+class Cartscreen extends StatefulWidget {
   int id;
-  Cart({super.key, required this.id});
+  Cartscreen({super.key, required this.id});
 
   @override
-  State<Cart> createState() => _CartState();
+  State<Cartscreen> createState() => _CartState();
 }
 
-class _CartState extends State<Cart> {
+class _CartState extends State<Cartscreen> {
   bool _isInit = true;
   Networking net = Networking();
   int totalSeconds = 3600;
@@ -38,6 +32,7 @@ class _CartState extends State<Cart> {
   }
 
   @override
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Addressprovider>(
@@ -142,7 +137,7 @@ class _CartState extends State<Cart> {
                                           "name": name,
                                           "image": imageurl
                                         };
-                                        DataModel.instance
+                                       await DataModel.instance
                                             .insert({'data': jsonEncode(data)});
                                         Navigator.push(
                                             context,

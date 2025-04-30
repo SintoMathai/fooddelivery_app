@@ -32,14 +32,16 @@ class DataModel {
     await db.execute('''
           CREATE TABLE $table (
             // $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
-            // $columndata TEXT NOT NULL
+            // $columndata TEXT NOT NULL,
+            // name TEXT,
+            // image TEXT
             
           )
           ''');
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
-    Database db = await database;
+    Database db = await instance.database;
     return await db.insert(table, row);
   }
 

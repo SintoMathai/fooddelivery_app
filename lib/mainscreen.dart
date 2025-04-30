@@ -28,14 +28,13 @@ class _page3State extends State<page4> {
 
   Future<void> fetchitems() async {
     var items = await net.multiuser();
-    Provider.of<filter>(context,listen: false).setitem(items);
-
+    Provider.of<filter>(context, listen: false).setitem(items);
   }
 
   Widget build(BuildContext context) {
     final favProvider = Provider.of<favour>(context);
-    final receipeprovider=Provider.of<filter>(context);
-    final filtereditems=receipeprovider.filtereditems;
+    final receipeprovider = Provider.of<filter>(context);
+    final filtereditems = receipeprovider.filtereditems;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,11 +47,10 @@ class _page3State extends State<page4> {
               width: 250,
               child: TextField(
                 onChanged: (value) {
-                 receipeprovider.filteritems(value);
+                  receipeprovider.filteritems(value);
                 },
                 controller: searchController,
                 decoration: InputDecoration(
-
                   fillColor: Colors.white,
                   filled: true,
                   prefixIcon: InkWell(
@@ -198,7 +196,7 @@ class _page3State extends State<page4> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => Cart(
+                                            builder: (context) => Cartscreen(
                                               id: item.id,
                                             ),
                                           ));
