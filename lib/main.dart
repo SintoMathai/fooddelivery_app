@@ -17,7 +17,8 @@ void main() async {
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => Addressprovider()),
       ChangeNotifierProvider(create: (context) => favour(),),
-      ChangeNotifierProvider(create: (context) => filter(),)],
+      ChangeNotifierProvider(create: (context) => filter(),),
+      ChangeNotifierProvider(create: (context) => Cart(),)],
       child: MaterialApp(debugShowCheckedModeBanner: false, home: bottombar()),
     ),
   );

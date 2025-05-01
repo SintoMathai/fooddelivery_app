@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fooddelivery_app/Payment.dart';
 import 'package:fooddelivery_app/api.dart';
 import 'package:fooddelivery_app/data_model.dart';
+import 'package:fooddelivery_app/provider.dart';
+import 'package:provider/provider.dart';
 
 class Cart2 extends StatefulWidget {
   const Cart2({super.key});
@@ -10,7 +12,6 @@ class Cart2 extends StatefulWidget {
   @override
   State<Cart2> createState() => _Cart2State();
 }
-
 class _Cart2State extends State<Cart2> {
   int selected = 1;
   List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -23,36 +24,26 @@ class _Cart2State extends State<Cart2> {
     super.initState();
     fetchCartData();
   }
-
   void fetchCartData() async {
     List<Map<String, dynamic>> rows = await DataModel.instance.queryAllRows();
     List<Map<String, dynamic>> tempList = [];
     for (var row in rows) {
-      print("Fetched DB row: $row");
       Map<String, dynamic> decoded = jsonDecode(row['data']);
       decoded['id'] = row['_id'];
-      print("Decoded ID: ${row['id']} from DB row: $row");
-
       tempList.add(decoded);
     }
     setState(() {
       cartItems = tempList;
     });
   }
-
   void removeFromCart(int id) async {
     await DataModel.instance.delete(id);
     fetchCartData();
   }
-
-  void removeitem(int index) {
-    setState(() {
-      cartItems.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<Cart>(context).fetch();
+
     return Scaffold(
         body: Padding(
             padding: const EdgeInsets.only(left: 15, top: 40),
@@ -168,9 +159,31 @@ class _Cart2State extends State<Cart2> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        print(
-                                            "Trying to delete item with ID: ${cartitem['id']}");
-                                        removeFromCart(cartitem['id']);
+                                        final itemid = cartitem['id'];
+                                        Provider.of<Cart>(context,listen: false).removeFromCart(itemid);
+                                        removeFromCart(itemid);
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                  "item removed successfully"),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text(
+                                                      "ok",
+                                                      style: TextStyle(
+                                                          color: Colors.black),
+                                                    ))
+                                              ],
+                                            );
+                                          },
+                                        );
                                       },
                                       child: Text("Remove from cart")),
                                 ],

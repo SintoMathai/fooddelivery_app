@@ -17,7 +17,6 @@ class Cartscreen extends StatefulWidget {
 }
 
 class _CartState extends State<Cartscreen> {
-  bool _isInit = true;
   Networking net = Networking();
   int totalSeconds = 3600;
   Timer? timer;

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
+import 'package:fooddelivery_app/data_model.dart';
 import 'package:fooddelivery_app/modelclass.dart';
 
 class Addressprovider extends ChangeNotifier {
@@ -54,5 +56,28 @@ class filter extends ChangeNotifier {
           .toList();
     }
     notifyListeners();
+  }
+}
+class Cart extends ChangeNotifier
+{
+  List<Map<String, dynamic>> _cartItems = [];
+  List<Map<String, dynamic>> get cartItems => _cartItems;
+
+  void fetch() async
+  {
+    List<Map<String, dynamic>> rows = await DataModel.instance.queryAllRows();
+    List<Map<String, dynamic>> tempList = [];
+
+    for (var row in rows) {
+      Map<String, dynamic> decoded = jsonDecode(row['data']);
+      decoded['id'] = row['_id'];
+      tempList.add(decoded);
+    }
+      _cartItems = tempList;
+    notifyListeners();
+  }
+  void removeFromCart(int id) async {
+    await DataModel.instance.delete(id);
+    fetch();
   }
 }

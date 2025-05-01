@@ -33,9 +33,7 @@ class DataModel {
           CREATE TABLE $table (
             // $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
             // $columndata TEXT NOT NULL,
-            // name TEXT,
-            // image TEXT
-            
+          
           )
           ''');
   }
@@ -52,6 +50,6 @@ class DataModel {
 
   Future<int> delete(int id) async {
     Database db = await database;
-    return await db.delete(table, where: 'id =?', whereArgs: [id]);
+    return await db.delete(table, where: '_id =?', whereArgs: [id]);
   }
 }
