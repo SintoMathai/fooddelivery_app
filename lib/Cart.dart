@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fooddelivery_app/Payment.dart';
-import 'package:fooddelivery_app/api.dart';
 import 'package:fooddelivery_app/data_model.dart';
 import 'package:fooddelivery_app/provider.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +21,7 @@ class _Cart2State extends State<Cart2> {
   @override
   void initState() {
     super.initState();
+    Provider.of<Cart>(context).fetch();
     fetchCartData();
   }
   void fetchCartData() async {
@@ -42,7 +42,6 @@ class _Cart2State extends State<Cart2> {
   }
   @override
   Widget build(BuildContext context) {
-    final provider=Provider.of<Cart>(context).fetch();
 
     return Scaffold(
         body: Padding(
