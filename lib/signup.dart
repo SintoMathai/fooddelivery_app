@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fooddelivery_app/functions.dart';
+import 'package:fooddelivery_app/loginpage.dart';
 
 class Signup extends StatefulWidget {
   Signup({super.key});
@@ -98,8 +99,20 @@ class _Page4State extends State<Signup> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {
-                  signUp();
+                onPressed: () async {
+                  User? user = await signUp();
+                  if (user != null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Signup failed. Please try again.')),
+                    );
+                  }
                 },
                 child: Text(
                   "SIGNUP",

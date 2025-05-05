@@ -31,6 +31,25 @@ class _CartState extends State<Cartscreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  void startTimer() async {
+    timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+        if (totalSeconds > 0) {
+          setState(() {
+            totalSeconds--;
+          });
+        } else {
+          timer.cancel();
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +155,7 @@ class _CartState extends State<Cartscreen> {
                                           "name": name,
                                           "image": imageurl
                                         };
-                                       await DataModel.instance
+                                        await DataModel.instance
                                             .insert({'data': jsonEncode(data)});
                                         Navigator.push(
                                             context,

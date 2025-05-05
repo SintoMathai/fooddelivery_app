@@ -58,22 +58,21 @@ class filter extends ChangeNotifier {
     notifyListeners();
   }
 }
-class Cart extends ChangeNotifier
-{
+
+class Cart extends ChangeNotifier {
+
   List<Map<String, dynamic>> _cartItems = [];
   List<Map<String, dynamic>> get cartItems => _cartItems;
 
-  void fetch() async
-  {
+  void fetch() async {
     List<Map<String, dynamic>> rows = await DataModel.instance.queryAllRows();
     List<Map<String, dynamic>> tempList = [];
-
     for (var row in rows) {
       Map<String, dynamic> decoded = jsonDecode(row['data']);
       decoded['id'] = row['_id'];
       tempList.add(decoded);
     }
-      _cartItems = tempList;
+    _cartItems = tempList;
     notifyListeners();
   }
   void removeFromCart(int id) async {
