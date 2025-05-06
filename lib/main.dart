@@ -19,7 +19,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => favour(),),
       ChangeNotifierProvider(create: (context) => filter(),),
       ChangeNotifierProvider(create: (context) => Cart(),)],
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: bottombar(),),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: Login(),),
     ),
   );
 }

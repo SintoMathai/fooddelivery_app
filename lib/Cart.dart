@@ -44,7 +44,7 @@ class _Cart2State extends State<Cart2> {
                     final cartitem = cartItems[index];
                     return Container(
                       width: 330,
-                      height: 250,
+                      height: 260,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                       ),

@@ -31,8 +31,8 @@ class DataModel {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            // $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
-            // $columndata TEXT NOT NULL,
+             $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+             $columndata TEXT NOT NULL
           
           )
           ''');

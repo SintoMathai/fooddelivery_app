@@ -89,7 +89,7 @@ class _CartState extends State<Cartscreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "${snapshot.data?.instructions}",
-                            style: TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 12),
                           ),
                         ),
                         Padding(

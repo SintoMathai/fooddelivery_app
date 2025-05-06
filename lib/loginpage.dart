@@ -30,8 +30,6 @@ class _page2State extends State<Login> {
 
       catch(e){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("invalid username or password")));
-
-
       }}
     return Scaffold(
       body: Container(
